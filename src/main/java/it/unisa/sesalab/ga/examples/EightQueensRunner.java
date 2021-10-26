@@ -1,7 +1,8 @@
 package it.unisa.sesalab.ga.examples;
 
-import it.unisa.sesalab.ga.examples.fix.NPointCrossover;
+import it.unisa.sesalab.ga.examples.fix.IntegerNPointCrossover;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
+import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.impl.IntegerPolynomialMutation;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
@@ -18,7 +19,7 @@ public class EightQueensRunner {
 
         Problem<IntegerSolution> problem = new EightQueensProblem();
         BinaryTournamentSelection<IntegerSolution> selection = new BinaryTournamentSelection<>();
-        CrossoverOperator<IntegerSolution> crossover = new NPointCrossover<>(crossoverProbability, 1);
+        CrossoverOperator<IntegerSolution> crossover = new IntegerNPointCrossover(crossoverProbability, 1);
         // Con probabilità 0.01 si perturba un gene: 0.5 si sceglie casualmente un gene da sinistra, altrimenti da destra
         IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, 0);
 
@@ -32,6 +33,8 @@ public class EightQueensRunner {
                 null
         );
 
-
+        AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(sga).execute();
+        IntegerSolution result = sga.getResult();
+        System.out.println(result);
     }
 }

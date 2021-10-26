@@ -3,6 +3,7 @@ package it.unisa.sesalab.ga.examples.fix;
 import org.apache.commons.lang3.ArrayUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -11,19 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class NPointCrossover<T extends Solution<?>> implements CrossoverOperator<T> {
+public class IntegerNPointCrossover implements CrossoverOperator<IntegerSolution> {
     private final JMetalRandom randomNumberGenerator = JMetalRandom.getInstance();
     private final double probability;
     private final int crossovers;
 
-    public NPointCrossover(double probability, int crossovers) {
+    public IntegerNPointCrossover(double probability, int crossovers) {
         if (probability < 0.0) throw new JMetalException("Probability can't be negative");
         if (crossovers < 1) throw new JMetalException("Number of crossovers is less than one");
         this.probability = probability;
         this.crossovers = crossovers;
     }
 
-    public NPointCrossover(int crossovers) {
+    public IntegerNPointCrossover(int crossovers) {
         this.crossovers = crossovers;
         this.probability = 1.0;
     }
@@ -34,7 +35,7 @@ public class NPointCrossover<T extends Solution<?>> implements CrossoverOperator
     }
 
     @Override
-    public List<T> execute(List<T> s) {
+    public List<IntegerSolution> execute(List<IntegerSolution> s) {
         Check.that(
                 getNumberOfRequiredParents() == s.size(),
                 "Point Crossover requires + "
@@ -49,9 +50,9 @@ public class NPointCrossover<T extends Solution<?>> implements CrossoverOperator
         }
     }
 
-    private List<T> doCrossover(List<T> s) {
-        T mom = s.get(0);
-        T dad = s.get(1);
+    private List<IntegerSolution> doCrossover(List<IntegerSolution> s) {
+        IntegerSolution mom = s.get(0);
+        IntegerSolution dad = s.get(1);
 
         Check.that(
                 mom.getVariables().size() == dad.getVariables().size(),
@@ -64,8 +65,8 @@ public class NPointCrossover<T extends Solution<?>> implements CrossoverOperator
         for (int i = 0; i < crossoverPoints.length; i++) {
             crossoverPoints[i] = randomNumberGenerator.nextInt(0, mom.getVariables().size() - 1);
         }
-        T girl = (T) mom.copy();
-        T boy = (T) dad.copy();
+        IntegerSolution girl = (IntegerSolution) mom.copy();
+        IntegerSolution boy = (IntegerSolution) dad.copy();
         boolean swap = false;
 
         for (int i = 0; i < mom.getVariables().size(); i++) {
@@ -78,7 +79,7 @@ public class NPointCrossover<T extends Solution<?>> implements CrossoverOperator
                 swap = !swap;
             }
         }
-        List<T> result = new ArrayList<>();
+        List<IntegerSolution> result = new ArrayList<>();
         result.add(girl);
         result.add(boy);
         return result;

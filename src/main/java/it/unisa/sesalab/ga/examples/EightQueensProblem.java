@@ -17,14 +17,11 @@ public class EightQueensProblem extends AbstractIntegerProblem {
             lowerBounds.add(1);
             upperBounds.add(8);
         }
-
         setVariableBounds(lowerBounds, upperBounds);
     }
 
     @Override
     public void evaluate(IntegerSolution integerSolution) {
-        // TODO Implement evaluation function here
-
-
+        // TODO: Implement Eval. Function
     }
 }
