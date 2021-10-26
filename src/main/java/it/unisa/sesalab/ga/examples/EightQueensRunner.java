@@ -20,7 +20,7 @@ public class EightQueensRunner {
         Problem<IntegerSolution> problem = new EightQueensProblem();
         BinaryTournamentSelection<IntegerSolution> selection = new BinaryTournamentSelection<>();
         CrossoverOperator<IntegerSolution> crossover = new IntegerNPointCrossover(crossoverProbability, 1);
-        // Con probabilità 0.01 si perturba un gene: 0.5 si sceglie casualmente un gene da sinistra, altrimenti da destra
+        // With 0.01 probability a gene is mutated: a randomly-chosen gene is copied from the left side (0.5) or right side (0.5)
         IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, 0);
 
         GenerationalGeneticAlgorithm<IntegerSolution> sga = new GenerationalGeneticAlgorithm<>(
